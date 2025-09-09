@@ -1,8 +1,40 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model User
+@{
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="card">
+            <div class="card-header">
+                <h4>My Profile</h4>
+            </div>
+            <div class="card-body">
+                <dl class="row">
+                    <dt class="col-sm-3">Full Name:</dt>
+                    <dd class="col-sm-9">@Model?.FullName</dd>
+
+                    <dt class="col-sm-3">Email:</dt>
+                    <dd class="col-sm-9">@Model?.Email</dd>
+
+                    <dt class="col-sm-3">Role:</dt>
+                    <dd class="col-sm-9">
+                        <span class="badge bg-@(Model?.Role == UserRole.Admin ? "danger" : "primary")">
+                            @Model?.Role
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-3">Status:</dt>
+                    <dd class="col-sm-9">
+                        <span class="badge bg-@(Model?.Status == UserStatus.Active ? "success" : "secondary")">
+                            @Model?.Status
+                        </span>
+                    </dd>
+
+                    <dt class="col-sm-3">Member Since:</dt>
+                    <dd class="col-sm-9">@Model?.CreatedAt.ToString("MMMM dd, yyyy")</dd>
+                </dl>
+            </div>
+        </div>
+    </div>
 </div>
