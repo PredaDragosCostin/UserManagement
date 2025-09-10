@@ -7,6 +7,6 @@
 - ## Features
 - SQLite database (auto-created)
 - Authentication & Authorization
-- CRUD operations with audit trail
+- CRUD operations
 - Role-based access control
-- Responsive Bootstrap UI
+- Bootstrap UI
