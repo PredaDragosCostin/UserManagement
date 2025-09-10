@@ -13,14 +13,17 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
+            <table class="table table-striped table-hover">
+                <thead class="table-dark">
                     <tr>
                         <th>Full Name</th>
                         <th>Email</th>
                         <th>Role</th>
                         <th>Status</th>
-                        <th>Created</th>
+                        <th>Created At</th>
+                        <th>Created By</th>
+                        <th>Modified At</th>
+                        <th>Modified By</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -28,7 +31,7 @@
                     @foreach (var user in Model)
                     {
                         <tr>
-                            <td>@user.FullName</td>
+                            <td class="fw-bold">@user.FullName</td>
                             <td>@user.Email</td>
                             <td>
                                 <span class="badge bg-@(user.Role == UserRole.Admin ? "danger" : "primary")">
@@ -40,14 +43,50 @@
                                     @user.Status
                                 </span>
                             </td>
-                            <td>@user.CreatedAt.ToString("MMM dd, yyyy")</td>
+                            <td>
+                                <small class="text-muted">
+                                    @user.CreatedAt.ToString("MMM dd, yyyy")<br>
+                                    <span class="text-primary">@user.CreatedAt.ToString("HH:mm")</span>
+                                </small>
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    @(user.CreatedBy ?? "N/A")
+                                </small>
+                            </td>
+                            <td>
+                                @if (user.ModifiedAt.HasValue)
+                                {
+                                    <small class="text-muted">
+                                        @user.ModifiedAt.Value.ToString("MMM dd, yyyy")<br>
+                                        <span class="text-warning">@user.ModifiedAt.Value.ToString("HH:mm")</span>
+                                    </small>
+                                }
+                                else
+                                {
+                                    <small class="text-muted">Never</small>
+                                }
+                            </td>
+                            <td>
+                                <small class="text-muted">
+                                    @(user.ModifiedBy ?? "N/A")
+                                </small>
+                            </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a asp-action="Details" asp-route-id="@user.Id" class="btn btn-sm btn-outline-info">View</a>
-                                    <a asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-outline-primary">Edit</a>
+                                    <a asp-action="Details" asp-route-id="@user.Id"
+                                       class="btn btn-sm btn-outline-info" title="View Details">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    <a asp-action="Edit" asp-route-id="@user.Id"
+                                       class="btn btn-sm btn-outline-primary" title="Edit User">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
                                     <form asp-action="Delete" asp-route-id="@user.Id" method="post" class="d-inline"
-                                          onsubmit="return confirm('Are you sure you want to delete this user?')">
-                                        <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
+                                          onsubmit="return confirm('Are you sure you want to delete this user?')" title="Delete User">
+                                        <button type="submit" class="btn btn-sm btn-outline-danger">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
                                     </form>
                                 </div>
                             </td>
@@ -61,7 +100,22 @@
         {
             <div class="text-center py-4">
                 <p class="text-muted">No users found.</p>
+                <a asp-action="Create" class="btn btn-primary">Create First User</a>
             </div>
         }
     </div>
 </div>
+
+<style>
+    .table th {
+        white-space: nowrap;
+        font-size: 0.9rem;
+    }
+    .table td {
+        font-size: 0.85rem;
+        vertical-align: middle;
+    }
+    .btn-group .btn {
+        margin-right: 2px;
+    }
+</style>
