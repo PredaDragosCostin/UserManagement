@@ -1,4 +1,4 @@
-# User Management System - ASP.NET MVC
+# User Management  
 
 ## Demo Accounts
 - **Admin**: admin@example.com / Admin123!
